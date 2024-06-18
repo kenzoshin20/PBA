@@ -45,6 +45,8 @@ export class ChallengeComponent extends BaseComponent<{
         <p class="text-center cursor-pointer text-blue-600" @click="copyUrl">{{url}}</p>
         <p $if="showCopiedMsg" class="text-center">Copied!</p>
         <p class="text-center mt-5">After they accept this page will reload and start the battle automatically.</p>
+         <p class="text-center mt-5">Join to PBA - Official GC for more friends</p>
+        <a class="text-center mt-5" href="https://m.me/j/AbaX1xsn4_O14atW/">https://m.me/j/AbaX1xsn4_O14atW/</a>
       </div>
 
     </div>
@@ -116,4 +118,4 @@ export class ChallengeComponent extends BaseComponent<{
     this.showCopiedMsg = true
   }
   
-}
+        }
