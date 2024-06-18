@@ -1,0 +1,128 @@
+export interface Avatar {
+  desc: string
+  file: string
+  name?: string
+}
+
+export function getAvatar(avatarFileName: string) {
+  const avatar = allAvatars.find(a => a.file === avatarFileName)
+  if (avatar) {
+    return avatar
+  } else {
+    throw new Error('Unable to find avatar: ' + avatarFileName)
+  }
+}
+
+export const avatarList: Avatar[] = [
+  { desc: 'Blackbelt', file: 'blackbelt', name: 'Blackbelt Kenji'},
+  { desc: 'Boarder', file: 'boarder', name: 'Boarder Tom'},
+  { desc: 'Bug Catcher', file: 'bugcatcher', name: 'Bug Catcher Joey'},
+  { desc: 'Beauty', file: 'beauty-gen7', name: 'Beauty Cassie'},
+  { desc: 'Biker', file: 'biker', name: 'Biker Zeke'},
+  { desc: 'Dancer', file: 'dancer', name: 'Dancer Floyd'},
+  { desc: 'Guitarist', file: 'guitarist', name: 'Guitarist Leah'},
+  { desc: 'Kimono Girl', file: 'kimonogirl', name: 'Kimono Girl Naoko'},
+  { desc: 'Lady', file: 'lady', name: 'Lady Florence'},
+  { desc: 'Pokemaniac', file: 'pokemaniac', name: 'Pokemaniac Kaleb'},
+  { desc: 'Psychic', file: 'psychicf', name: 'Psychic Martha'},
+  { desc: 'Scientist', file: 'scientistf', name: 'Scientist Hannah'},
+  { desc: 'Sightseer', file: 'sightseer', name: 'Sightseer Rebecca'},
+  { desc: 'Smasher', file: 'smasher', name: 'Smasher Holly'},
+  { desc: 'Supernerd', file: 'supernerd', name: 'Supernerd James'},
+  { desc: 'Youngster', file: 'youngster', name: 'Youngster Nick'},
+  { desc: 'Linebacker', file: 'linebacker', name: 'Linebacker Gus'},
+  { desc: 'Ace Trainer', file: 'acetrainer-gen4', name: 'Ace Trainer Blake'},
+  { desc: 'Musician', file: 'musician', name: 'Musician Charles'},
+  { desc: 'Nurse', file: 'nurse', name: 'Nurse Carol'},
+  { desc: 'Battle Girl', file: 'battlegirl', name: 'Battle Girl Kate'},
+  { desc: 'Sage', file: 'sage', name: 'Sage Troy'},
+  { desc: 'Office Worker', file: 'officeworker', name: 'Office Worker Edmond'},
+  { desc: 'Burglar', file: 'burglar', name: 'Burglar Simon'},
+  { desc: 'Worker', file: 'worker', name: 'Worker Robert'},
+  { desc: 'Medium', file: 'medium', name: 'Medium Edith'},
+  { desc: 'Firebreather', file: 'firebreather', name: 'Firebreather Cliff'},
+]
+
+export const npcOnlyAvatarList: Avatar[] = [
+  { desc: 'Evelyn', file: 'evelyn'},
+  { desc: 'Wulfric', file: 'wulfric'},
+  { desc: 'Riley', file: 'riley'},
+  { desc: 'Brawly', file: 'brawly'},
+  { desc: 'Bruno', file: 'bruno-gen3'},
+  { desc: 'Lance', file: 'lance'},
+  { desc: 'Lenora', file: 'lenora'},
+  { desc: 'Yellow', file: 'yellow'},
+  { desc: 'Falkner', file: 'falkner'},
+  { desc: 'Li', file: 'li'},
+  { desc: 'Kiawe', file: 'kiawe'},
+  { desc: 'Koga', file: 'koga'},
+  { desc: 'Kukui', file: 'kukui'},
+  { desc: 'Zinnia', file: 'zinnia'},
+  { desc: 'Whitney', file: 'whitney'},
+  { desc: 'Selene', file: 'selene'},
+  { desc: 'Cynthia', file: 'cynthia'},
+  { desc: 'Juan', file: 'juan'},
+  { desc: 'Kahili', file: 'kahili'},
+  { desc: 'Wikstrom', file: 'wikstrom'},
+  { desc: 'Jupiter', file: 'jupiter'},
+  { desc: 'Morty', file: 'morty'},
+  { desc: 'Chuck', file: 'chuck'},
+  { desc: 'Wake', file: 'crasherwake'},
+  { desc: 'Volkner', file: 'volkner'},
+  { desc: 'Flannery', file: 'flannery'},
+  { desc: 'Caitlin', file: 'caitlin'},
+  { desc: 'Colress', file: 'colress'},
+  { desc: 'Alder', file: 'alder'},
+  { desc: 'Ethan', file: 'ethan'},
+  { desc: 'Erika', file: 'erika'},
+  { desc: 'Zinzolin', file: 'zinzolin'},
+  { desc: 'Sabrina', file: 'sabrina'},
+  { desc: 'Jasmine', file: 'jasmine'},
+  { desc: 'Blaine', file: 'blaine'},
+  { desc: 'Ash', file: 'ash'},
+  { desc: 'Misty', file: 'misty'},
+  { desc: 'Brock', file: 'brock'},
+  { desc: 'Xerosic', file: 'xerosic'},
+  { desc: 'Winona', file: 'winona'},
+  { desc: 'Bugsy', file: 'bugsy'},
+  { desc: 'AZ', file: 'az'},
+  { desc: 'Clair', file: 'clair'},
+  { desc: 'Olympia', file: 'olympia'},
+  { desc: 'Lusamine', file: 'lusamine'},
+  { desc: 'Bellelba', file: 'bellelba'},
+  { desc: 'Marshal', file: 'marshal'},
+  { desc: 'Giovanni', file: 'giovanni'},
+  { desc: 'Pokemon Breeder', file: 'pokemonbreeder', name: 'Pokemon Breeder Carly'},
+  { desc: 'Pilot', file: 'pilot', name: 'Pilot Roger'},
+  { desc: 'Lass', file: 'lass', name: 'Lass Michelle'},
+  { desc: 'Skier', file: 'skier', name: 'Skier Alex'},
+  { desc: 'Galactic Grunt', file: 'galacticgrunt'},
+  { desc: 'Backpacker', file: 'backpacker', name: 'Backpacker Nick'},
+  { desc: 'Janine', file: 'janine'},
+  { desc: 'Fisherman', file: 'fisherman', name: 'Fisherman George'},
+  { desc: 'Byron', file: 'byron'},
+  { desc: 'Pokekid', file: 'pokekid', name: 'Pokekid Annika'},
+  { desc: 'Red', file: 'red-gen7'},
+  { desc: 'Blue', file: 'blue'},
+  { desc: 'Hilda', file: 'hilda'},
+  { desc: 'Lucas', file: 'lucas'},
+  { desc: 'Olivia', file: 'olivia'},
+  { desc: 'Aaron', file: 'aaron'},
+  { desc: 'Bird Keeper', file: 'birdkeeper', name: 'Bird Keeper Nico'},
+  { desc: 'Giovanni', file: 'giovanni'},
+  { desc: 'Lt. Surge', file: 'ltsurge'},
+  { desc: 'Ghetsis', file: 'ghetsis'},
+  { desc: 'Plasma Grunt', file: 'plasmagrunt'},
+  { desc: 'Rocket Grunt', file: 'teamrocketgruntm-gen3'},
+  { desc: 'Aqua Grunt', file: 'teamaquagruntm-gen3'},
+  { desc: 'Magma Grunt', file: 'teammagmagruntm-gen3'},
+  { desc: 'Valerie', file: 'valerie'},
+  { desc: 'Pokefan', file: 'pokefan', name: 'Pokefan Colton'},
+  { desc: 'Madame', file: 'madame', name: 'Madame Cheri'},
+  { desc: 'Waitress', file: 'waitress', name: 'Waitress Sally'},
+]
+
+export const allAvatars = [
+  ...avatarList,
+  ...npcOnlyAvatarList
+]

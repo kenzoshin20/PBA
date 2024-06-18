@@ -1,0 +1,1 @@
+export type MoveCategory = 'PHYSICAL' | 'SPECIAL' | 'STATUS'

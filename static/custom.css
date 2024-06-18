@@ -1,0 +1,129 @@
+.user_withdrawing {
+  position: relative;
+  animation: user_withdraw_animation .12s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes user_withdraw_animation {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.enemy_withdrawing {
+  position: relative;
+  animation: enemy_withdraw_animation .12s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes enemy_withdraw_animation {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.user_deploying {
+  position: relative;
+  animation: user_deploy_animation .12s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes user_deploy_animation {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.enemy_deploying {
+  position: relative;
+  animation: enemy_deploy_animation .12s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes enemy_deploy_animation {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.outline {
+  border: 1px solid black;
+}
+
+.main-menu {
+  font-family: 'Press Start 2P';
+}
+
+.silhouette {
+  filter: brightness(0%);
+}
+
+.z-35 {
+  z-index: 35;
+}
+
+.z--10 {
+  z-index: -10;
+}
+
+.darker-1 {
+  filter: brightness(80%);
+}
+.darker-2 {
+  filter: brightness(60%);
+}
+
+/* Transform animation styles */
+.transform-dark1 { filter: brightness(80%); }
+.transform-dark2 { filter: brightness(60%); }
+.transform-flash { visibility: hidden; }
+
+/* Pokemon card styles */
+.stat-bar-worst { background-color: #f34444; }
+.stat-bar-bad { background-color: #ff7f0f; }
+.stat-bar-ok { background-color: #ffdd57; }
+.stat-bar-good { background-color: #a0e515; }
+.stat-bar-verygood { background-color: #23cd5e; }
+.stat-bar-best { background-color: #00c2b8; }
+
+/* Weather backgrounds */
+body[data-weather="HARSH_SUNLIGHT"] { 
+  background-image: url('img/weather-harsh-sunlight.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+body[data-weather="RAIN"] { 
+  background-image: url('img/weather-rain.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+body[data-weather="HAIL"] { 
+  background-image: url('img/weather-hail.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+body[data-weather="SANDSTORM"] { 
+  background-image: url('img/weather-sandstorm.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
