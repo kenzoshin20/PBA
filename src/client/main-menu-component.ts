@@ -18,7 +18,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
       <div class="container mx-auto px-4">
         <img class="h-28 mx-auto mt-10" src="/img/pokemon_logo.png" alt="pokemon"/>
         <h1 class="text-center text-2xl mt-8 px-4">
-          REJARD
+          BATTLE ARENA
         </h1>
         <div $if="!loading" class="mt-10">
           <div $if="nestedRoute('/')">
@@ -26,6 +26,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
             <main-menu-button-component text="POKEDEX" route="/pokedex"></main-menu-button-component>
             <main-menu-button-component $if="!loggedIn" text="LOG IN" route="/login"></main-menu-button-component>
             <main-menu-button-component $if="loggedIn" text="SETTINGS" route="/settings"></main-menu-button-component>
+            <main-menu-button-component text="JOIN CHAT" externalUrl="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component> <!-- New Button -->
           </div>
           <div $if="nestedRoute('/play')">
             <main-menu-button-component text="SINGLE PLAYER" :action="selectSinglePlayer"></main-menu-button-component>
@@ -71,7 +72,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
   async selectSinglePlayer() {
     const user = await getUser()
     if (user.singlePlayerBattleId) {
-      // User is already in a single player  battle
+      // User is already in a single player battle
       this.$router.goTo(`/battle/${user.singlePlayerBattleId}`)
     } else {
       this.$router.goTo(`/singleplayer`)
@@ -81,7 +82,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
   async selectArena() {
     const user = await getUser()
     if (user.singlePlayerBattleId) {
-      // User is already in a single player  battle
+      // User is already in a single player battle
       this.$router.goTo(`/battle/${user.singlePlayerBattleId}`)
     } else {
       // User is not in a single player battle
@@ -97,7 +98,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
   async selectPractice() {
     const user = await getUser()
     if (user.singlePlayerBattleId) {
-      // User is already in a single player  battle
+      // User is already in a single player battle
       this.$router.goTo(`/battle/${user.singlePlayerBattleId}`)
     } else {
       // User is not in a single player battle
@@ -134,8 +135,9 @@ class MultiPlayerResumeComponent extends BaseComponent<{}> {
 }
 
 class MainMenuButtonComponent extends BaseComponent<{
-  route: string,
-  action: () => void
+  route?: string,
+  externalUrl?: string,
+  action?: () => void
 }> {
   template = /*html*/ `
     <div class="flex flex-row justify-center mt-6">
@@ -147,6 +149,8 @@ class MainMenuButtonComponent extends BaseComponent<{
   handleClick() {
     if (this.props.route) {
       this.$router.goTo(this.props.route)
+    } else if (this.props.externalUrl) {
+      window.location.href = this.props.externalUrl
     }
   }
-}
+  }
