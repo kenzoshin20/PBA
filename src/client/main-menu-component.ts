@@ -18,7 +18,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
       <div class="container mx-auto px-4">
         <img class="h-28 mx-auto mt-10" src="/img/pokemon_logo.png" alt="pokemon"/>
         <h1 class="text-center text-2xl mt-8 px-4">
-          REJARD
+          PUKEv1.0
         </h1>
         <div $if="!loading" class="mt-10">
           <div $if="nestedRoute('/')">
@@ -26,7 +26,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
             <main-menu-button-component text="POKEDEX" route="/pokedex"></main-menu-button-component>
             <main-menu-button-component $if="!loggedIn" text="LOG IN" route="/login"></main-menu-button-component>
             <main-menu-button-component $if="loggedIn" text="SETTINGS" route="/settings"></main-menu-button-component>
-            <main-menu-button-component text="JOIN CHAT" externalUrl="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component> <!-- New Button -->
+            <main-menu-button-component text="JOIN CHAT" isExternal="true" route="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component> <!-- New Button -->
           </div>
           <div $if="nestedRoute('/play')">
             <main-menu-button-component text="SINGLE PLAYER" :action="selectSinglePlayer"></main-menu-button-component>
@@ -136,8 +136,9 @@ class MultiPlayerResumeComponent extends BaseComponent<{}> {
 
 class MainMenuButtonComponent extends BaseComponent<{
   route?: string,
-  externalUrl?: string,
-  action?: () => void
+  isExternal?: boolean,
+  action?: () => void,
+  text: string
 }> {
   template = /*html*/ `
     <div class="flex flex-row justify-center mt-6">
@@ -147,10 +148,10 @@ class MainMenuButtonComponent extends BaseComponent<{
     </div>
   `
   handleClick() {
-    if (this.props.route) {
+    if (this.props.isExternal) {
+      window.open(this.props.route, '_blank')
+    } else if (this.props.route) {
       this.$router.goTo(this.props.route)
-    } else if (this.props.externalUrl) {
-      window.open(this.props.externalUrl, '_blank')
     }
   }
-  }
+      }
