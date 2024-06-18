@@ -1,32 +1,31 @@
-import { CreateBattleRequest } from "../model/create-battle"
-import { BaseComponent } from "./base-component"
-import { getUser, getUserName, postBattle, postChallengeRequest, tryToGetUser } from "./client-api"
-import { preloadMiscImages } from "./preload-images"
+import { CreateBattleRequest } from "../model/create-battle";
+import { BaseComponent } from "./base-component";
+import { getUser, tryToGetUser, postBattle, postChallengeRequest } from "./client-api";
+import { preloadMiscImages } from "./preload-images";
+import { LeaderboardComponent } from "./leaderboard-component";
 
 export class MainMenuComponent extends BaseComponent<{}> {
-
-  loading = true
-  loggedIn = false
+  loading = true;
+  loggedIn = false;
 
   constructor(props: any) {
-    super(props)
-    preloadMiscImages()
+    super(props);
+    preloadMiscImages();
   }
 
   template = /*html*/ `
     <div class="main-menu">
       <div class="container mx-auto px-4">
         <img class="h-28 mx-auto mt-10" src="/img/pokemon_logo.png" alt="pokemon"/>
-        <h1 class="text-center text-2xl mt-8 px-4">
-          PUKEv1.0
-        </h1>
+        <h1 class="text-center text-2xl mt-8 px-4">BATTLE ARENA</h1>
         <div $if="!loading" class="mt-10">
           <div $if="nestedRoute('/')">
             <main-menu-button-component text="PLAY" route="/play"></main-menu-button-component>
             <main-menu-button-component text="POKEDEX" route="/pokedex"></main-menu-button-component>
             <main-menu-button-component $if="!loggedIn" text="LOG IN" route="/login"></main-menu-button-component>
             <main-menu-button-component $if="loggedIn" text="SETTINGS" route="/settings"></main-menu-button-component>
-            <main-menu-button-component text="JOIN CHAT" isExternal="true" route="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component> <!-- New Button -->
+            <main-menu-button-component text="LEADERBOARD" route="/leaderboard"></main-menu-button-component> <!-- New Button -->
+            <main-menu-button-component text="JOIN CHAT" externalUrl="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component>
           </div>
           <div $if="nestedRoute('/play')">
             <main-menu-button-component text="SINGLE PLAYER" :action="selectSinglePlayer"></main-menu-button-component>
@@ -49,96 +48,90 @@ export class MainMenuComponent extends BaseComponent<{}> {
         </div>
       </div>
     </div>
-  `
+  `;
   includes = {
     MainMenuButtonComponent,
-    MultiPlayerResumeComponent
-  }
+    MultiPlayerResumeComponent,
+    LeaderboardComponent  // Include the new component
+  };
 
   async beforeMount() {
-    const user = await tryToGetUser()
+    const user = await tryToGetUser();
     if (user) {
-      this.loggedIn = true
+      this.loggedIn = true;
     } else {
-      this.loggedIn = false
+      this.loggedIn = false;
     }
-    this.loading = false
+    this.loading = false;
   }
 
   nestedRoute(route: string) {
-    return window.location.pathname === route
+    return window.location.pathname === route;
   }
 
   async selectSinglePlayer() {
-    const user = await getUser()
+    const user = await getUser();
     if (user.singlePlayerBattleId) {
-      // User is already in a single player battle
-      this.$router.goTo(`/battle/${user.singlePlayerBattleId}`)
+      this.$router.goTo(`/battle/${user.singlePlayerBattleId}`);
     } else {
-      this.$router.goTo(`/singleplayer`)
+      this.$router.goTo(`/singleplayer`);
     }
   }
 
   async selectArena() {
-    const user = await getUser()
+    const user = await getUser();
     if (user.singlePlayerBattleId) {
-      // User is already in a single player battle
-      this.$router.goTo(`/battle/${user.singlePlayerBattleId}`)
+      this.$router.goTo(`/battle/${user.singlePlayerBattleId}`);
     } else {
-      // User is not in a single player battle
       const createBattleRequest: CreateBattleRequest = {
         battleType: 'SINGLE_PLAYER',
         battleSubType: 'ARENA'
-      }
-      const battle = await postBattle(createBattleRequest)
-      this.$router.goTo(`/battle/${battle.battleId}`)
+      };
+      const battle = await postBattle(createBattleRequest);
+      this.$router.goTo(`/battle/${battle.battleId}`);
     }
   }
 
   async selectPractice() {
-    const user = await getUser()
+    const user = await getUser();
     if (user.singlePlayerBattleId) {
-      // User is already in a single player battle
-      this.$router.goTo(`/battle/${user.singlePlayerBattleId}`)
+      this.$router.goTo(`/battle/${user.singlePlayerBattleId}`);
     } else {
-      // User is not in a single player battle
       const createBattleRequest: CreateBattleRequest = {
         battleType: 'SINGLE_PLAYER',
         battleSubType: 'PRACTICE'
-      }
-      const battle = await postBattle(createBattleRequest)
-      this.$router.goTo(`/battle/${battle.battleId}`)
+      };
+      const battle = await postBattle(createBattleRequest);
+      this.$router.goTo(`/battle/${battle.battleId}`);
     }
   }
 
   async createChallenge() {
-    await getUser()
-    const challenge = await postChallengeRequest()
-    this.$router.goTo(`/challenge/${challenge.challengeId}`)
+    await getUser();
+    const challenge = await postChallengeRequest();
+    this.$router.goTo(`/challenge/${challenge.challengeId}`);
   }
-
 }
 
 class MultiPlayerResumeComponent extends BaseComponent<{}> {
-  battles: string[] = []
+  battles: string[] = [];
   template = /*html*/ `
     <ul>
       <li $for="battle in battles">
         <a href="/battle/{{battle}}">{{battle}}</a>
       </li>
     </ul>
-  `
+  `;
   async beforeMount() {
-    const user = await getUser()
-    this.battles = user.multiPlayerBattleIds
+    const user = await getUser();
+    this.battles = user.multiPlayerBattleIds;
   }
 }
 
 class MainMenuButtonComponent extends BaseComponent<{
   route?: string,
-  isExternal?: boolean,
-  action?: () => void,
-  text: string
+  externalUrl?: string,
+  action?: () => void
 }> {
   template = /*html*/ `
     <div class="flex flex-row justify-center mt-6">
@@ -146,12 +139,12 @@ class MainMenuButtonComponent extends BaseComponent<{
         {{props.text}}
       </button>
     </div>
-  `
+  `;
   handleClick() {
-    if (this.props.isExternal) {
-      window.open(this.props.route, '_blank')
-    } else if (this.props.route) {
-      this.$router.goTo(this.props.route)
+    if (this.props.route) {
+      this.$router.goTo(this.props.route);
+    } else if (this.props.externalUrl) {
+      window.location.href = this.props.externalUrl;
     }
   }
-      }
+}

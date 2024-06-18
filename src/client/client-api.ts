@@ -216,6 +216,15 @@ export function clientError(message: string) {
   logError(message)
   alert(message)
 }
+//new
+export async function getLeaderboard() {
+  const response = await fetch('/api/leaderboard');
+  if (!response.ok) {
+    throw new Error('Failed to fetch leaderboard');
+  }
+  return await response.json();
+}
+
 
 function redirectToLogin(postLoginRedirect?: string) {
   const fromParam = postLoginRedirect ? postLoginRedirect : window.location.pathname
