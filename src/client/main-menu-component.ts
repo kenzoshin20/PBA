@@ -18,7 +18,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
       <div class="container mx-auto px-4">
         <img class="h-28 mx-auto mt-10" src="/img/pokemon_logo.png" alt="pokemon"/>
         <h1 class="text-center text-2xl mt-8 px-4">
-          BATTLE ARENA
+          REJARD
         </h1>
         <div $if="!loading" class="mt-10">
           <div $if="nestedRoute('/')">
@@ -150,7 +150,7 @@ class MainMenuButtonComponent extends BaseComponent<{
     if (this.props.route) {
       this.$router.goTo(this.props.route)
     } else if (this.props.externalUrl) {
-      window.location.href = this.props.externalUrl
+      window.open(this.props.externalUrl, '_blank')
     }
   }
   }
