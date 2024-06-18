@@ -137,7 +137,7 @@ export async function setupRoutes(server: Express, router: Router) {
         sendErrorResponse(response, ex)
     }
   })
-  
+  /*
   async function handleGameOver(dao: DAO, battle: Battle) {
     battle.events.push({
       type: 'GAME_OVER',
@@ -170,8 +170,66 @@ export async function setupRoutes(server: Express, router: Router) {
       }
     }
   }
+*/
+async function handleGameOver(dao: DAO, battle: Battle) {
+  battle.events.push({
+    type: 'GAME_OVER',
+    winnerName: battle.winnerName as string
+  });
 
+  for (const player of battle.players) {
+    if (player.type === 'HUMAN') {
+      const user = await dao.findUser(player.name);
+      if (user) {
+        if (battle.battleType === 'SINGLE_PLAYER') {
+          if (user.singlePlayerBattleId === battle.battleId) {
+            delete user.singlePlayerBattleId;
+          }
+          if (battle.battleSubType === 'LEAGUE' && battle.leagueLevel != null) {
+            if (!user.leagueLevel) {
+              user.leagueLevel = 0;
+            }
+            if (battle.winnerName === user.username) {
+              if (battle.leagueLevel >= user.leagueLevel) {
+                user.leagueLevel++;
+                handleRewards(user, battle);
+              }
+            }
+          }
+        } else {
+          user.multiPlayerBattleIds = user.multiPlayerBattleIds.filter(i => i !== battle.battleId);
+          if (battle.winnerName === user.username) {
+            user.wins = (user.wins || 0) + 1;
+            user.points = (user.points || 0) + 10;  // Example point system
+          } else {
+            user.losses = (user.losses || 0) + 1;
+          }
+        }
+        await dao.saveUser(user);
+      }
+    }
+  }
+}
 
+function handleRewards(user: User, battle: Battle) {
+  const newUnlocks = [];
+  for (const rewardNumber of battle.rewards) {
+    if (!user.unlockedPokemon.includes(rewardNumber)) {
+      user.unlockedPokemon.push(rewardNumber);
+      newUnlocks.push(rewardNumber);
+    }
+  }
+
+  if (newUnlocks.length) {
+    const isLastPokemon = user.unlockedPokemon.length >= speciesList.length;
+    battle.events.push({
+      type: 'UNLOCK_POKEMON',
+      dexNumbers: newUnlocks,
+      isLastPokemon: isLastPokemon,
+    });
+  }
+}
+//****edbd
   router.post('/api/battle/end-all', async (request: Request, response: Response) => {
     try {
       logInfo(`POST battle END ALL`)
@@ -468,7 +526,7 @@ function sendForbiddenResponse(response: Response) {
   }
   response.status(403).json(errorResponse)
 }
-
+/*
 function handleRewards(user: User, battle: Battle) {
   const newUnlocks = []
   for (const rewardNumber of battle.rewards) {
@@ -487,3 +545,13 @@ function handleRewards(user: User, battle: Battle) {
     })
   }
 }
+*/
+router.get('/api/leaderboard', async (request: Request, response: Response) => {
+  try {
+    const users = await dao.findAllUsers();
+    users.sort((a, b) => (b.points || 0) - (a.points || 0));  // Sort by points in descending order
+    response.json(users.slice(0, 10));  // Return top 10 users
+  } catch (ex) {
+    sendErrorResponse(response, ex);
+  }
+});
