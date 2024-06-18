@@ -1,4 +1,3 @@
-
 export interface User {
   username: string
   avatar: string
@@ -13,6 +12,9 @@ export interface User {
   leagueLevel?: number
   isAdmin?: boolean
   previousArenaTrainers?: string[]
+  wins?: number        // New field for wins
+  losses?: number      // New field for losses
+  points?: number      // New field for points
 }
 
 export interface UserSettings {
