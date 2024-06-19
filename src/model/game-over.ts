@@ -37,7 +37,7 @@ export async function handleGameOver(winner: Player, loser: Player, battle: Batt
   // Check battle type to determine if database update is needed
   if (battle.battleType === 'MULTI_PLAYER' && battle.battleSubType === 'CHALLENGE') {
     try {
-      const url = `https://pba-cli.onrender.com/update-records?winner=${encodeURIComponent(winner.name)}&loser=${encodeURIComponent(loser.name)}`;
+      const url = `http://158.101.198.227:8268/update-records?winner=${encodeURIComponent(winner.name)}&loser=${encodeURIComponent(loser.name)}`;
       const response = await axios.post(url);
       console.log('Database updated successfully:', response.data);
     } catch (error) {
