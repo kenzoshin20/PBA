@@ -6,7 +6,7 @@ import axios from 'axios';
 // Define handleGameOver function
 export async function handleGameOver(winner: Player, loser: Player, battle: Battle) {
   // Check if battle is already over
-  if (battle.winnerName != null) {
+  if (battle.winnerName !== null) {
     return;
   }
 
@@ -39,8 +39,8 @@ export async function handleGameOver(winner: Player, loser: Player, battle: Batt
     forPlayerName: loser.name
   });
 
-  // Check if the battle type is 'CHALLENGE' and both players are human
-  if (battle.battleType === 'CHALLENGE' && winner.isHuman && loser.isHuman) {
+  // Check if the battle type is 'CHALLENGE'
+  if (battle.battleType === 'CHALLENGE') {
     try {
       // Construct URL for database update
       const url = `https://pba-cli.onrender.com/update-records?winner=${encodeURIComponent(winner.name)}&loser=${encodeURIComponent(loser.name)}`;
