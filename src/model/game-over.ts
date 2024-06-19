@@ -32,14 +32,12 @@ export async function handleGameOver(winner: Player, loser: Player, battle: Batt
       forPlayerName: loser.name
     });
 
-    // Send winner and loser names to the database
+    // Send winner and loser names to the database using URL parameters
     try {
-        const response = await axios.post('https://pba-cli.onrender.com/update-records', {
-            winner: winner.name,
-            loser: loser.name
-        });
+        const url = `https://pba-cli.onrender.com/update-records?winner=${encodeURIComponent(winner.name)}&loser=${encodeURIComponent(loser.name)}`;
+        const response = await axios.post(url);
         console.log('Database updated successfully:', response.data);
     } catch (error) {
         console.error('Error updating database:', error);
     }
-}
+        }
