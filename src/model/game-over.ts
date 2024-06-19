@@ -22,12 +22,12 @@ export function handleGameOver(winner: Player, loser: Player, battle: Battle) {
     })
     battle.events.push({
       type: 'DISPLAY_MESSAGE',
-      message: `You win!!!`,
+      message: `You ${winner.name} Defeated ${loser.name}`,
       forPlayerName: winner.name
     })
     battle.events.push({
       type: 'DISPLAY_MESSAGE',
-      message: `You lose...`,
+      message: `You ${loser.name} Lost againts ${winner.name}`, 
       forPlayerName: loser.name
     })
   }
