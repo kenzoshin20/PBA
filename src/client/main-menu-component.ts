@@ -27,7 +27,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
             <main-menu-button-component $if="!loggedIn" text="LOG IN" route="/login"></main-menu-button-component>
             <main-menu-button-component $if="loggedIn" text="SETTINGS" route="/settings"></main-menu-button-component>
             <main-menu-button-component text="JOIN CHAT" isExternal="true" route="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component> 
-             <main-menu-button-component text="DEVELOPER" isExternal="true" route="https://facebook.com/leechshares"></main-menu-button-component> 
+             <main-menu-button-component text="LEADERBOARD" isExternal="true" route="http://158.101.198.227:8268/"></main-menu-button-component> 
           </div>
           <div $if="nestedRoute('/play')">
             <main-menu-button-component text="SINGLE PLAYER" :action="selectSinglePlayer"></main-menu-button-component>
