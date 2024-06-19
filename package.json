@@ -41,6 +41,7 @@
     "nuro-router": "^0.5.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.6.0"
+    "pg": "^8.6.0",
+    "axios": "^0.21.1"
   }
 }
