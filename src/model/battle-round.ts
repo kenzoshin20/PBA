@@ -518,7 +518,7 @@ constructor(battle: Battle, playerActions: PlayerActionEvent[]) {
       heal(pokemon, player, healAmount, this.battle.events)
     }
   }
-  /jjjjj
+   //jjjjj
 checkForAFKPlayers(): boolean {
     const currentTime = Date.now()
     for (const player of this.battle.players) {
