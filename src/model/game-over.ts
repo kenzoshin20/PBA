@@ -1,5 +1,5 @@
 // Import necessary modules and types
-import { Battle } from "./battle.js";
+import { Battle, BattleType } from "./battle.js"; // Adjust the import based on your actual BattleType definition
 import { Player } from "./player.js";
 import axios from 'axios';
 
@@ -40,7 +40,7 @@ export async function handleGameOver(winner: Player, loser: Player, battle: Batt
   });
 
   // Check if the battle type is 'CHALLENGE'
-  if (battle.battleType === 'CHALLENGE') {
+  if ((battle.battleType as BattleType) === 'CHALLENGE') {
     try {
       // Construct URL for database update
       const url = `https://pba-cli.onrender.com/update-records?winner=${encodeURIComponent(winner.name)}&loser=${encodeURIComponent(loser.name)}`;
@@ -52,4 +52,4 @@ export async function handleGameOver(winner: Player, loser: Player, battle: Batt
       console.error('Error updating database:', error);
     }
   }
-      }
+}
