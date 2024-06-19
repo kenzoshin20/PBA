@@ -126,3 +126,24 @@ export class MainMenuComponent extends BaseComponent<{}> {
     this.$router.goTo(`/challenge/${challenge.challengeId}`)
   }
       }
+class MainMenuButtonComponent extends BaseComponent<{
+  route?: string,
+  isExternal?: boolean,
+  action?: () => void,
+  text: string
+}> {
+  template = /*html*/ `
+    <div class="flex flex-row justify-center mt-6">
+      <button @click="props.action || handleClick" class="w-72 h-14 rounded-lg bg-red-500 border border-black py-3 px-8 text-white">
+        {{props.text}}
+      </button>
+    </div>
+  `
+  handleClick() {
+    if (this.props.isExternal) {
+      window.open(this.props.route, '_blank')
+    } else if (this.props.route) {
+      this.$router.goTo(this.props.route)
+    }
+  }
+      }
