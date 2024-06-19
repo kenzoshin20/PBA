@@ -53,6 +53,9 @@ export class Battle {
   rewards: number[]
   turnCount: number
 
+  private readonly afkTimeoutMinutes: number = 1; 
+  private afkCheckInterval: NodeJS.Timeout | null = null;
+
   constructor(battleData: BattleData) {
     this.battleType = battleData.battleType || 'MULTI_PLAYER'
     this.battleSubType = battleData.battleSubType || 'CHALLENGE'
@@ -69,6 +72,57 @@ export class Battle {
     this.rewards = battleData.rewards
     this.winnerName = battleData.winnerName
     this.turnCount = battleData.turnCount
+
+    // Start AFK check interval
+    this.startAfkCheck();
+  }
+
+  private startAfkCheck() {
+    // Clear any existing interval to prevent multiple intervals
+    if (this.afkCheckInterval) {
+      clearInterval(this.afkCheckInterval);
+    }
+    // Start a new interval to check AFK status
+    this.afkCheckInterval = setInterval(() => {
+      for (const player of this.players) {
+        if (player.type === 'HUMAN' && this.pendingPlayerAction?.playerName !== player.name) {
+          // Player is human and not the one who has pending action
+          const lastActionTimestamp = player.lastActionTimestamp || 0;
+          const timeSinceLastAction = Date.now() - lastActionTimestamp;
+          if (timeSinceLastAction > this.afkTimeoutMinutes * 60 * 1000) {
+            logInfo(`Player ${player.name} has been AFK for too long. Quitting battle.`);
+            this.quitBattle(player.name);
+            break;
+          }
+        }
+      }
+    }, 60000); // Check every minute
+  }
+
+  private quitBattle(playerName: string) {
+    const player = this.players.find(p => p.name === playerName);
+    if (player) {
+      this.events.push({
+        type: 'DISPLAY_MESSAGE',
+        message: `${player.name} has been disqualified for being AFK too long.`
+      });
+      // Example logic to handle quitting: Remove player, adjust battle state, etc.
+      // For simplicity, this example assumes removing the player from the battle.
+      this.players = this.players.filter(p => p.name !== playerName);
+      // Check if the battle needs to be ended if there are no players left
+      if (this.players.length === 0) {
+        this.battleState = 'GAME_OVER';
+        this.events.push({
+          type: 'DISPLAY_MESSAGE',
+          message: `No players left in the battle. The battle is over.`
+        });
+      }
+      // Stop the AFK check if no players are left
+      if (this.players.length === 0 && this.afkCheckInterval) {
+        clearInterval(this.afkCheckInterval);
+        this.afkCheckInterval = null;
+      }
+    }
   }
 
   getData(): BattleData {
@@ -119,8 +173,8 @@ export class Battle {
     this.validatePlayerAction(playerAction)
   
     if (playerAction.details.type === 'QUIT_BATTLE') {
-      this.battleState = 'GAME_OVER'
-      return
+      this.quitBattle(playerAction.playerName);
+      return;
     }
 
     if (this.battleType === 'SINGLE_PLAYER' && !this.pendingPlayerAction) {
@@ -194,7 +248,6 @@ export class Battle {
       }
       this.doActions([aiAction, nothingAction])
     }
-  
   }
 
   validatePlayerAction(playerAction: PlayerActionEvent) {
@@ -246,6 +299,10 @@ export class Battle {
         throw new Error('Pokemon is bound and cannot switch')
       }
     }
+    // Update last action timestamp for human players
+    if (player.type === 'HUMAN') {
+      player.lastActionTimestamp = Date.now();
+    }
   }
 
   doActions(playerActions: PlayerActionEvent[]) {
@@ -296,6 +353,14 @@ export class Battle {
       hasLightScreen: player.remainingLightScreenTurns > 0,
       hasReflect: player.remainingReflectTurns > 0
     })
+  }
+
+  // Method to stop AFK check interval when battle is over
+  stopAfkCheck() {
+    if (this.afkCheckInterval) {
+      clearInterval(this.afkCheckInterval);
+      this.afkCheckInterval = null;
+    }
   }
 
 }
