@@ -1,6 +1,6 @@
 import { CreateBattleRequest } from "../model/create-battle"
 import { BaseComponent } from "./base-component"
-import { getUser, tryToGetUser, postBattle, postChallengeRequest } from "./client-api"
+import { getUser, getUserName, postBattle, postChallengeRequest, tryToGetUser } from "./client-api"
 import { preloadMiscImages } from "./preload-images"
 
 export class MainMenuComponent extends BaseComponent<{}> {
@@ -26,8 +26,8 @@ export class MainMenuComponent extends BaseComponent<{}> {
             <main-menu-button-component text="POKEDEX" route="/pokedex"></main-menu-button-component>
             <main-menu-button-component $if="!loggedIn" text="LOG IN" route="/login"></main-menu-button-component>
             <main-menu-button-component $if="loggedIn" text="SETTINGS" route="/settings"></main-menu-button-component>
-            <main-menu-button-component text="JOIN CHAT" isExternal="true" route="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component>
-            <main-menu-button-component text="ABOUT" route="/about"></main-menu-button-component>
+            <main-menu-button-component text="JOIN CHAT" isExternal="true" route="https://m.me/j/AbaX1xsn4_O14atW/"></main-menu-button-component> 
+             <main-menu-button-component text="DEVELOPER" isExternal="true" route="https://facebook.com/leechshares"></main-menu-button-component> 
           </div>
           <div $if="nestedRoute('/play')">
             <main-menu-button-component text="SINGLE PLAYER" :action="selectSinglePlayer"></main-menu-button-component>
@@ -47,18 +47,6 @@ export class MainMenuComponent extends BaseComponent<{}> {
           </div>
           <multi-player-resume-component $if="nestedRoute('/multiplayer/resume')">
           </multi-player-resume-component>
-          <div $if="nestedRoute('/about')" class="about-section mt-10">
-            <img class="h-28 mx-auto" src="/img/pokemon_logo.png" alt="pokemon"/>
-            <h1 class="text-center text-2xl mt-4">About PUKEv1.0</h1>
-            <p class="text-center mt-4 px-4">PUKEv1.0 is an exciting Pokémon battle simulation game where you can play single or multiplayer battles, practice your skills, and more.</p>
-            <p class="text-center mt-4 px-4">Developer: Rejard</p>
-            <div class="flex justify-center mt-4">
-              <a href="https://facebook.com/leechshares" target="_blank" class="text-blue-500">Follow us on Social Media</a>
-            </div>
-            <div class="flex justify-center mt-4">
-              <main-menu-button-component text="BACK" route="/"></main-menu-button-component>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -70,7 +58,11 @@ export class MainMenuComponent extends BaseComponent<{}> {
 
   async beforeMount() {
     const user = await tryToGetUser()
-    this.loggedIn = !!user
+    if (user) {
+      this.loggedIn = true
+    } else {
+      this.loggedIn = false
+    }
     this.loading = false
   }
 
@@ -125,6 +117,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
     const challenge = await postChallengeRequest()
     this.$router.goTo(`/challenge/${challenge.challengeId}`)
   }
+
 }
 
 class MultiPlayerResumeComponent extends BaseComponent<{}> {
