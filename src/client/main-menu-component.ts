@@ -51,9 +51,9 @@ export class MainMenuComponent extends BaseComponent<{}> {
             <img class="h-28 mx-auto" src="/img/pokemon_logo.png" alt="pokemon"/>
             <h1 class="text-center text-2xl mt-4">About PUKEv1.0</h1>
             <p class="text-center mt-4 px-4">PUKEv1.0 is an exciting Pokémon battle simulation game where you can play single or multiplayer battles, practice your skills, and more.</p>
-            <p class="text-center mt-4 px-4">Developer: Rejard</p>
+            <p class="text-center mt-4 px-4">Developer: Your Name</p>
             <div class="flex justify-center mt-4">
-              <a href="https://facebook.com/rejardbentazarofficial" target="_blank" class="text-blue-500">Follow us on Social Media</a>
+              <a href="https://your-social-media-link.com" target="_blank" class="text-blue-500">Follow us on Social Media</a>
             </div>
             <div class="flex justify-center mt-4">
               <main-menu-button-component text="BACK" route="/"></main-menu-button-component>
@@ -70,7 +70,7 @@ export class MainMenuComponent extends BaseComponent<{}> {
 
   async beforeMount() {
     const user = await tryToGetUser()
-    this.loggedIn = !!user;
+    this.loggedIn = !!user
     this.loading = false
   }
 
@@ -125,25 +125,4 @@ export class MainMenuComponent extends BaseComponent<{}> {
     const challenge = await postChallengeRequest()
     this.$router.goTo(`/challenge/${challenge.challengeId}`)
   }
-      }
-class MainMenuButtonComponent extends BaseComponent<{
-  route?: string,
-  isExternal?: boolean,
-  action?: () => void,
-  text: string
-}> {
-  template = /*html*/ `
-    <div class="flex flex-row justify-center mt-6">
-      <button @click="props.action || handleClick" class="w-72 h-14 rounded-lg bg-red-500 border border-black py-3 px-8 text-white">
-        {{props.text}}
-      </button>
-    </div>
-  `
-  handleClick() {
-    if (this.props.isExternal) {
-      window.open(this.props.route, '_blank')
-    } else if (this.props.route) {
-      this.$router.goTo(this.props.route)
-    }
   }
-      }
