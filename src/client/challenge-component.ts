@@ -20,7 +20,7 @@ export class ChallengeComponent extends BaseComponent<{
       <div $if="view == 'RECEIVER'">
         <img class="h-28 mx-auto mt-10" src="/img/pokemon_logo.png" alt="pokemon"/>
         <h1 class="main-menu text-center text-2xl mt-8 px-4">
-          BATTLE ARENA
+          PvP
         </h1>
         <div id="avatar-display" class="mt-5 mb-8">
           <img class="h-32 mx-auto" src="/sprites/trainers/{{challenge.challengerAvatar.toLowerCase()}}.png">
@@ -36,17 +36,24 @@ export class ChallengeComponent extends BaseComponent<{
         </div>
       </div>
 
-
       <div $if="view == 'CHALLENGER'">
-        <h1 class="text-center text-xl m-2">CHALLENGE A FRIEND</h1>
-        <h2 class="text-center text-lg mt-5 cursor-pointer">Challenge ID: {{props.routeParams.challengeId}}</h2>
-        <p class="text-center mt-5">Send this URL to a friend to challenge them to a Pokemon battle!</p>
-        <p class="text-center mt-5">You can click the URL below to copy it to your clipboard:</p>
-        <p class="text-center cursor-pointer text-blue-600" @click="copyUrl">{{url}}</p>
-        <p $if="showCopiedMsg" class="text-center">Copied!</p>
-        <p class="text-center mt-5">After they accept this page will reload and start the battle automatically.</p>
-         <p class="text-center mt-5">Join to PBA - Official GC for more friends</p>
-        <a class="text-center mt-5" href="https://m.me/j/AbaX1xsn4_O14atW/">https://m.me/j/AbaX1xsn4_O14atW/</a>
+        <img class="h-28 mx-auto mt-10" src="/img/pokemon_logo.png" alt="pokemon"/>
+        <h1 class="main-menu text-center text-2xl mt-8 px-4">
+          PvP
+        </h1>
+        <div id="avatar-display" class="mt-5 mb-8">
+          <img class="h-32 mx-auto" src="/sprites/trainers/{{challenge.challengerAvatar.toLowerCase()}}.png">
+        </div>
+        <terminal-component></terminal-component>
+        <div class="grid grid-cols-2 gap-1">
+          <div @click="shareChallenge" class="ml-1 mt-2 h-16 cursor-pointer bg-gray-100 text-center text-lg pt-3 rounded border-2 border-solid border-black">
+            Share
+          </div>
+          <div @click="rejectChallenge" class="mr-1 mt-2 h-16 cursor-pointer bg-gray-100 text-center text-lg pt-3 rounded border-2 border-solid border-black">
+            Cancel
+          </div>
+        </div>
+        <p $if="showCopiedMsg" class="text-center mt-2">Copied!</p>
       </div>
 
     </div>
@@ -107,7 +114,7 @@ export class ChallengeComponent extends BaseComponent<{
     this.$router.goTo('/')
   }
 
-  copyUrl() {
+  shareChallenge() {
     var dummy = document.createElement('input'),
     text = window.location.href;
     document.body.appendChild(dummy);
@@ -117,5 +124,4 @@ export class ChallengeComponent extends BaseComponent<{
     document.body.removeChild(dummy);
     this.showCopiedMsg = true
   }
-  
-        }
+  }
