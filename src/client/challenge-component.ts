@@ -53,6 +53,7 @@ export class ChallengeComponent extends BaseComponent<{
             Cancel
           </div>
         </div>
+        <p class="text-center mt-2">Challenger is waiting for rival...</p>
         <p $if="showCopiedMsg" class="text-center mt-2">Copied!</p>
       </div>
 
@@ -69,6 +70,10 @@ export class ChallengeComponent extends BaseComponent<{
       this.challenge = await getChallenge(challengeId)
       if (loggedInUser && this.challenge.challengerName === loggedInUser.username) {
         this.view = 'CHALLENGER'
+        await this.$controller.publish({
+          type: 'DISPLAY_MESSAGE',
+          message: `Challenger is waiting for rival...`
+        })
         this.poll()
       } else {
         this.view = 'RECEIVER'
