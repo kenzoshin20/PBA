@@ -49,11 +49,11 @@ export class ChallengeComponent extends BaseComponent<{
           <div @click="shareChallenge" class="ml-1 mt-2 h-16 cursor-pointer bg-gray-100 text-center text-lg pt-3 rounded border-2 border-solid border-black">
             Share
           </div>
-          <!--
+          
           <div @click="rejectChallenge" class="mr-1 mt-2 h-16 cursor-pointer bg-gray-100 text-center text-lg pt-3 rounded border-2 border-solid border-black">
             Cancel
           </div>
-          -->
+         
         </div>
         <p class="text-center mt-2">Challenger is waiting for rival...</p>
         <p $if="showCopiedMsg" class="text-center mt-2">Copied!</p>
@@ -142,20 +142,20 @@ export class ChallengeComponent extends BaseComponent<{
           this.showCopiedMsg = true;
         } else {
           // Handle error sharing challenge
-          await this.$controller.publish({
+        /*  await this.$controller.publish({
             type: 'DISPLAY_MESSAGE',
             message: `Failed to share challenge`
-          });
+          }); */
           console.error('Failed to share challenge:', response.statusText);
         }
       } catch (error) {
         // Handle network or other errors
-        console.error('Error sharing challenge:', error);
+    /*    console.error('Error sharing challenge:', error);
         await this.$controller.publish({
           type: 'DISPLAY_MESSAGE',
           message: `Error sharing challenge: ${error.message}`
-        });
+        }); */
       }
     }
   }
-  }
+}
