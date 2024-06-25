@@ -1,6 +1,5 @@
 import { Battle } from "./battle.js";
 import { Player } from "./player.js";
-import axios from 'axios';
 
 export async function handleGameOver(winner: Player, loser: Player, battle: Battle) {
   if (battle.winnerName != null) {
@@ -38,8 +37,16 @@ export async function handleGameOver(winner: Player, loser: Player, battle: Batt
   if (battle.battleType === 'MULTI_PLAYER' && battle.battleSubType === 'CHALLENGE') {
     try {
       const url = `http://158.101.198.227:8268/update-records?winner=${encodeURIComponent(winner.name)}&loser=${encodeURIComponent(loser.name)}`;
-      const response = await axios.post(url);
-      console.log('Database updated successfully:', response.data);
+      const response = await fetch(url, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Database updated successfully:', data);
     } catch (error) {
       console.error('Error updating database:', error);
     }
