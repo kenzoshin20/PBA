@@ -9,11 +9,42 @@
     <link href="/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="/tailwind.min.css" rel="stylesheet" />
     <link href="/custom.css" rel="stylesheet" />
+    <link href="/styles.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   </head>
   <body class="bg-blue-200">
+  <!-- 🥴🥴🥴🥴🥴🥴🥴
+    -->
+
+    <button id="myButton" class="floating-btn">📌</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>HARDASF PROJECTS</h3>
+            <br>
+            <br>
+                <div  id="disqus_thread"></div>
+        </div>
+    </div>
     <script src="/bundle.js"></script>
+     <script src="/script.js"></script>
+     <script>
+  var disqus_config = function () {
+    this.page.url = window.location.href;  
+    this.page.identifier = document.title; 
+  };
+
+  (function() {  
+    var d = document, s = d.createElement('script');
+    s.src = 'https://https-pba-byrejard-onrender-com.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
   </body>
 </html>
