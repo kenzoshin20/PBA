@@ -44,7 +44,7 @@ iframe {
     background-color: rgba(0,0,0,0.4);
     padding-top: 60px;
 }
-
+/*
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto;
@@ -55,7 +55,18 @@ iframe {
     border: 2px solid black;
     border-radius: 7px;
 }
-
+*/
+.modal-content {
+    width: 80%; /* Adjust width as per your layout */
+    max-width: 800px; /* Example maximum width */
+    height: 80%; /* Adjust height as per your layout */
+    max-height: 600px; /* Example maximum height */
+    overflow: auto; /* Enable scrolling if content exceeds dimensions */
+    position: relative; /* Ensure proper positioning */
+    margin: auto; /* Center align if needed */
+    padding: 20px; /* Add padding for better appearance */
+    background-color: #fff; /* Ensure background is visible */
+}
 .close {
     color: #aaa;
     float: right;
