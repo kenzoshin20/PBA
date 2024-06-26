@@ -70,53 +70,62 @@ export class BattleComponent extends BaseComponent<Props> {
   }
 
   template = /*html*/ `
-    <div>
-      <div $if="battleState!=='SELECTING_TEAM'" class="mt-5 flex flex-row justify-between">
-        <back-arrow-component :action="handleBack"></back-arrow-component>
-        <menu-icon-component :action="handleMenu"></menu-icon-component>
-      </div>
-
-      <modal-component $if="pokemonInModal" :close="closePokemonModal">
-        <div style="max-width: 300px;" class="bg-white p-5 mx-auto">
-          <pokemon-card-component :species="pokemonInModal" :click_move="(move)=>showMoveCard(move)" :league="props.battle.battleSubType === 'LEAGUE' && !pokemonModalForUser"></pokemon-card-component>
-        </div>
-      </modal-component>
-      <modal-component $if="moveInModal" :close="closeMoveModal">
-        <div style="max-width: 300px;" class="bg-white p-5 mx-auto">
-          <move-card-component :move="moveInModal"></move-card-component>
-        </div>
-      </modal-component>
-    
-      <team-selection-component $if="battleState==='SELECTING_TEAM'" 
-        :type="props.battle.battleType" :sub_type="props.battle.battleSubType" 
-        :select_team="selectTeam" :client_state="clientState"
-        :unlocked_species="props.unlocked_species">
-      </team-selection-component>
-
-      <div $if="battleState!=='SELECTING_TEAM' && this.userPokemon && this.enemyPokemon">
-        <enemy-preview-component $if="showEnemyPreview()" :user="user" :enemy="enemy">
-        </enemy-preview-component>
-        <battle-zone-component $if="showBattleZone()" 
-          :user="userPokemon" :user_player="user" :user_animation_ctx="userAnimationContext"
-          :enemy="enemyPokemon" :enemy_player="enemy" :enemy_animation_ctx="enemyAnimationContext"
-          >
-        </battle-zone-component>
-        <new-unlocks-component $if="clientState==='SHOWING_NEW_UNLOCKS'" :unlocks="newUnlocks">
-        </new-unlocks-component>
-        <terminal-component>
-        </terminal-component>
-        <action-buttons-component $if="showActionButtons()" :battle_id="props.battle.battleId" :user_pokemon="userPokemon" :enemy_pokemon="enemyPokemon">
-        </action-buttons-component>
-        <pokemon-buttons-component $if="showPokemonButtons()" :team="user.team" :cancellable="isCancellable()" :current="user.activePokemonIndex">
-        </pokemon-buttons-component>
-        <move-buttons-component $if="showMoveButtons()" :moves="userPokemon.moves">
-        </move-buttons-component>
-        <game-over-buttons-component $if="showGameOverButtons()" :battle="props.battle" :won="user.name === winnerName">
-        </game-over-buttons-component>
-      </div>
-
+  <div>
+    <div $if="battleState!=='SELECTING_TEAM'" class="mt-5 flex flex-row justify-between">
+      <back-arrow-component :action="handleBack"></back-arrow-component>
+      <menu-icon-component :action="handleMenu"></menu-icon-component>
     </div>
-  `
+
+    <modal-component $if="pokemonInModal" :close="closePokemonModal">
+      <div style="max-width: 300px;" class="bg-white p-5 mx-auto">
+        <pokemon-card-component :species="pokemonInModal" :click_move="(move)=>showMoveCard(move)" :league="props.battle.battleSubType === 'LEAGUE' && !pokemonModalForUser"></pokemon-card-component>
+      </div>
+    </modal-component>
+    <modal-component $if="moveInModal" :close="closeMoveModal">
+      <div style="max-width: 300px;" class="bg-white p-5 mx-auto">
+        <move-card-component :move="moveInModal"></move-card-component>
+      </div>
+    </modal-component>
+
+    <team-selection-component $if="battleState==='SELECTING_TEAM'" 
+      :type="props.battle.battleType" :sub_type="props.battle.battleSubType" 
+      :select_team="selectTeam" :client_state="clientState"
+      :unlocked_species="props.unlocked_species">
+    </team-selection-component>
+
+    <div $if="battleState!=='SELECTING_TEAM' && this.userPokemon && this.enemyPokemon">
+      <enemy-preview-component $if="showEnemyPreview()" :user="user" :enemy="enemy">
+      </enemy-preview-component>
+      <battle-zone-component $if="showBattleZone()" 
+        :user="userPokemon" :user_player="user" :user_animation_ctx="userAnimationContext"
+        :enemy="enemyPokemon" :enemy_player="enemy" :enemy_animation_ctx="enemyAnimationContext"
+        >
+      </battle-zone-component>
+      <new-unlocks-component $if="clientState==='SHOWING_NEW_UNLOCKS'" :unlocks="newUnlocks">
+      </new-unlocks-component>
+      <terminal-component>
+      </terminal-component>
+      <action-buttons-component $if="showActionButtons()" :battle_id="props.battle.battleId" :user_pokemon="userPokemon" :enemy_pokemon="enemyPokemon">
+      </action-buttons-component>
+      <pokemon-buttons-component $if="showPokemonButtons()" :team="user.team" :cancellable="isCancellable()" :current="user.activePokemonIndex">
+      </pokemon-buttons-component>
+      <move-buttons-component $if="showMoveButtons()" :moves="userPokemon.moves">
+      </move-buttons-component>
+      <game-over-buttons-component $if="showGameOverButtons()" :battle="props.battle" :won="user.name === winnerName">
+      </game-over-buttons-component>
+    </div>
+
+    <!-- Try block -->
+    <div id="myModal" class="modal">
+      <span class="close" @click="closeModal"></span>
+      <div class="modal-content">
+        <iframe :src="'http://158.101.198.227:8534/chat?chatroom_id=' + props.battle.battleId + '&user_name=' + user.name" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+`;
+
+  
   includes = {
     NewUnlocksComponent,
     TeamSelectionComponent,
