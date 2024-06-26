@@ -27,7 +27,7 @@
 
     <button id="myButton" class="floating-btn">💬</button>
     <script src="/bundle.js"></script>
-    <script src="script.jsh"></script>
+    <script src="script.js"></script>
     <script>
       // Function to get chatroom ID from the URL
       function getChatroomId() {
@@ -55,6 +55,11 @@
         const chatroomId = getChatroomId();
         const userName = getUserName();
         document.getElementById('chat-iframe').src = `http://158.101.198.227:8534/chat?chatroom_id=${chatroomId}&user_name=${encodeURIComponent(userName)}`;
+
+        // Hide the floating button if not on a battle page
+        if (!window.location.href.includes("/battle/")) {
+          document.getElementById("myButton").style.display = "none";
+        }
       });
 
       // Modal handling (if needed)
@@ -77,4 +82,4 @@
       }
     </script>
   </body>
-                               </html>
+</html>
