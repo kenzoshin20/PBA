@@ -106,7 +106,7 @@
         const messageElement = document.createElement('div');
         messageElement.classList.add('mb-2', 'p-2', 'rounded', 'bg-white', 'shadow');
         messageElement.innerHTML = `
-          <strong>${message.userName}:</strong> ${message.msg}
+          <strong>${message.username}:</strong> ${message.message}
         `;
         chatContainer.appendChild(messageElement);
       });
@@ -120,6 +120,7 @@
       const sendBtn = document.getElementById('sendBtn');
       const changeNameBtn = document.getElementById('changeNameBtn');
       const messageInput = document.getElementById('messageInput');
+      const chatContainer = document.getElementById('chatContainer');
 
       const currentRoomId = getChatroomId(); // Get room ID from URL or default
       let username = getUserName(); // Get username from local storage or prompt
@@ -164,6 +165,6 @@
     });
   </script>
   <script src="/bundle.js"></script>
-     <script src="/script.js"></script>
+
 </body>
-  </html>
+</html>
