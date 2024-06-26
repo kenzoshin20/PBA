@@ -55,11 +55,6 @@
         const chatroomId = getChatroomId();
         const userName = getUserName();
         document.getElementById('chat-iframe').src = `http://158.101.198.227:8534/chat?chatroom_id=${chatroomId}&user_name=${encodeURIComponent(userName)}`;
-
-        // Hide the floating button if not on a battle page
-        if (!window.location.href.includes("/battle/")) {
-          document.getElementById("myButton").style.display = "none";
-        }
       });
 
       // Modal handling (if needed)
