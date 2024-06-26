@@ -17,17 +17,64 @@
   <body class="bg-blue-200">
   <!-- 🥴🥴🥴🥴🥴🥴🥴
     -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <iframe id="chat-iframe" src="" style="width: 100%; height: 400px; border: none;"></iframe>
-  </div>
-</div>
 
-<button id="myButton" class="floating-btn">💬</button>
-    
+   <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe id="chat-iframe" style="width: 100%; height: 400px; border: none;"></iframe>
+      </div>
+    </div>
+
+    <button id="myButton" class="floating-btn">💬</button>
     <script src="/bundle.js"></script>
-     
-     
+    <script src="script.jsh"></script>
+    <script>
+      // Function to get chatroom ID from the URL
+      function getChatroomId() {
+        const url = window.location.href;
+        const match = url.match(/\/battle\/(\d+)/);
+        return match ? match[1] : 'pba125';
+      }
+
+      // Function to get or prompt for the user's name
+      function getUserName() {
+        let userName = localStorage.getItem('userName');
+        if (!userName) {
+          userName = prompt("Please enter your name:");
+          if (userName) {
+            localStorage.setItem('userName', userName);
+          } else {
+            userName = 'Guest';
+          }
+        }
+        return userName;
+      }
+
+      // Set the chatroom ID and user name in the iframe src
+      document.addEventListener("DOMContentLoaded", function() {
+        const chatroomId = getChatroomId();
+        const userName = getUserName();
+        document.getElementById('chat-iframe').src = `http://158.101.198.227:8534/chat?chatroom_id=${chatroomId}&user_name=${encodeURIComponent(userName)}`;
+      });
+
+      // Modal handling (if needed)
+      const modal = document.getElementById("myModal");
+      const btn = document.getElementById("myButton");
+      const span = document.getElementsByClassName("close")[0];
+
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    </script>
   </body>
-</html>
+                               </html>
