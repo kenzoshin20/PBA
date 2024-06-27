@@ -10,7 +10,7 @@ import expressSession from 'express-session'
 
 configureLogger({ enabled: true })
 
-const PORT = process.env.PORT || 10000
+const PORT = process.env.PORT || 8080
 const CODE_CACHE_LENGTH = process.env.CODE_CACHE_LENGTH || '3m'
 const SESSION_SECRET = process.env.SESSION_SECRET || 'pikachu'
  
