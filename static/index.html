@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta property="og:title" content="PBA" />
-    <meta property="og:description" content="Simple Pokemon Battle Game ." />
+    <meta property="og:description" content="Simple Pokemon Battle Game." />
     <link href="/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="/tailwind.min.css" rel="stylesheet" />
     <link href="/custom.css" rel="stylesheet" />
@@ -15,10 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   </head>
   <body class="bg-blue-200">
-  <!-- 🥴🥴🥴🥴🥴🥴🥴
-    -->
-
-   <div id="myModal" class="modal">
+    <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <iframe id="chat-iframe" style="width: 100%; height: 400px; border: none;"></iframe>
@@ -27,16 +24,14 @@
 
     <button id="myButton" class="floating-btn">💬</button>
     <script src="/bundle.js"></script>
-   
+
     <script>
-      // Function to get chatroom ID from the URL
       function getChatroomId() {
         const url = window.location.href;
         const match = url.match(/\/battle\/(\d+)/);
         return match ? match[1] : 'pba125';
       }
 
-      // Function to get or prompt for the user's name
       function getUserName() {
         let userName = localStorage.getItem('userName');
         if (!userName) {
@@ -50,14 +45,12 @@
         return userName;
       }
 
-      // Set the chatroom ID and user name in the iframe src
       document.addEventListener("DOMContentLoaded", function() {
         const chatroomId = getChatroomId();
         const userName = getUserName();
         document.getElementById('chat-iframe').src = `http://158.101.198.227:8534/chat?chatroom_id=${chatroomId}&user_name=${encodeURIComponent(userName)}`;
       });
 
-      // Modal handling (if needed)
       const modal = document.getElementById("myModal");
       const btn = document.getElementById("myButton");
       const span = document.getElementsByClassName("close")[0];
@@ -75,6 +68,14 @@
           modal.style.display = "none";
         }
       }
+
+      btn.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+        const chatroomId = getChatroomId();
+        const userName = getUserName();
+        const chatUrl = `http://158.101.198.227:8534/chat?chatroom_id=${chatroomId}&user_name=${encodeURIComponent(userName)}`;
+        window.open(chatUrl, '_blank');
+      });
     </script>
   </body>
 </html>
