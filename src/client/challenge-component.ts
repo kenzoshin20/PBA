@@ -142,3 +142,21 @@ export class ChallengeComponent extends BaseComponent<{
     }
   }
 }
+
+async function sendMessageToChatRoom(chatroomId: string, username: string, message: string) {
+  const url = `http://158.101.198.227:8534/api/chat?chatroom_id=${encodeURIComponent(chatroomId)}&username=${encodeURIComponent(username)}&message=${encodeURIComponent(message)}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send message');
+    }
+
+    console.log('Message sent successfully');
+  } catch (error) {
+    console.error('Error sending message:', error.message);
+  }
+          }
